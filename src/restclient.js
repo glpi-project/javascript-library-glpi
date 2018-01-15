@@ -1,3 +1,5 @@
+import prepareRequest from './prepareRequest'
+
 class GlpiRestClient { 
     constructor (url, appToken = '') {
         this._url = url
@@ -29,25 +31,20 @@ class GlpiRestClient {
         if (appToken) this._appToken = appToken
     }
 
-    _prepareRequest (method, endpoint, options) {
-        fetch (
-            `${this._url}/${endpoint}`,
-            {
-                method,
-                headers: {
-                    "Content-type": "application/json",
-                    ...options.headers
-                },
-                body: options.body
-            }
-        )
-            .then((response) => {
-                console.log(response)
-            })
+    _makeRequest (myRequest, responseHandler) {
+        fetch (myRequest)
+            .then((resp) => {            
+                if (resp.headers.get('Content-Type').indexOf("application/json") >= 0) {
+                    responseHandler(resp.json())
+                } else {
+                    responseHandler(resp.text())
+                }
+            }) 
             .catch((err) => {
-                console.log(err)
+                responseHandler(err)
             })
     }
+
 }
 
 export default GlpiRestClient
