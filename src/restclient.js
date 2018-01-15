@@ -45,6 +45,32 @@ class GlpiRestClient {
             })
     }
 
+    initSessionByCredentials (userName, userPassword) {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'initSessionByCredentials',
+                    endpoint: 'initSession',
+                    method: 'GET',
+                    url: this._url,
+                    appToken: this._appToken,
+                    userName,
+                    userPassword
+                }
+
+                const myRequest = prepareRequest(data)
+
+                this._makeRequest(myRequest, (response) => {
+                    resolve (
+                        response
+                    ) 
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiRestClient
