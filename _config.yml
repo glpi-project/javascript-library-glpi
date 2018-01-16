@@ -3,7 +3,7 @@ email: glpi@teclib.com
 twitter: glpi_project
 baseurl: "/javascript-library-glpi"
 url: "https://flyve.org"   
-image: https://flyve.org/javascript/images/logo2.png
+image: https://flyve.org/javascript-library-glpi/images/logo2.png
 
 # Build settings
 markdown: kramdown
