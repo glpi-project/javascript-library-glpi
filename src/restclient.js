@@ -1,5 +1,6 @@
 import prepareRequest from './prepareRequest'
 import config from './config'
+import ITEMTYPE from './itemtype.json'
 
 class GlpiRestClient { 
     constructor (url, appToken = '') {
@@ -37,12 +38,6 @@ class GlpiRestClient {
             .then((resp) => {        
   
                 switch (funct) {
-
-                    case 'initSessionByCredentials':
-                    case 'initSessionByUserToken':
-                        responseHandler(resp.json())
-                    break
-
                     case 'killSession':
                         if (resp.ok) {
                             responseHandler(resp.text())                            
@@ -52,7 +47,7 @@ class GlpiRestClient {
                     break
                     
                     default:
-                        responseHandler(resp.text())
+                        responseHandler(resp.json())
                     break
                 }
 
@@ -121,6 +116,30 @@ class GlpiRestClient {
                         resolve ( response ) 
                     })
                 })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    addItem (itemtype, input) {
+        return new Promise((resolve, reject) => {
+            try {
+                if (!itemtype || itemtype !== ITEMTYPE[itemtype.name]) {
+                    reject('Invalid itemtype')
+                } else {
+                    const data = {
+                        function: 'addItem',
+                        itemtype,
+                        input
+                    }
+                    this._makeRequest( prepareRequest(data), 'addItem', (promise) => {
+                        promise.then(response => {
+                            resolve ( response ) 
+                        })
+                    })
+                }
             }
             catch (err) {
                 reject(err)

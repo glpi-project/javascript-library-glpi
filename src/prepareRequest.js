@@ -13,20 +13,31 @@ function prepareRequest (data) {
     }
                          
     switch (data.function) {
+
         case 'initSessionByCredentials': 
             myHeaders.append('Authorization', `Basic ${Buffer.from(`${data.userName}:${data.userPassword}`).toString('base64')}`)
             url = `${url}/initSession`
             myInit = { method: 'GET' }
         break
+
         case 'initSessionByUserToken': 
             url = `${url}/initSession?user_token=${data.userToken}`
             myInit = { method: 'GET' }
         break
+
         case 'killSession': 
-            myHeaders.append('Accept', 'text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8')
             url = `${url}/killSession`
             myInit = { method: 'GET' }
         break
+
+        case 'addItem':
+            url = `${url}/${data.itemtype.name}`
+            myInit = { 
+                method: 'POST',
+                body: JSON.stringify({input: data.input})
+            }            
+        break
+
         default:
         break
     }
