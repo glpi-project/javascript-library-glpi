@@ -57,6 +57,11 @@ function prepareRequest (data) {
             url = `${url}/getMyEntities`
             myInit = { method: 'GET'}            
         break
+
+        case 'getActiveEntities':
+            url = `${url}/getActiveEntities`
+            myInit = { method: 'GET'}            
+        break
         
         default:
         break
