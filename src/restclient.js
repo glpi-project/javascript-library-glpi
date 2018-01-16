@@ -200,6 +200,24 @@ class GlpiRestClient {
             }
         })
     }
+
+    getMyEntities () {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'getMyEntities'
+                }
+                this._makeRequest( prepareRequest(data), 'getMyEntities', (promise) => {
+                    promise.then(response => {
+                        resolve ( response ) 
+                    })
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiRestClient
