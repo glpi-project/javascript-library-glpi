@@ -33,9 +33,14 @@ function prepareRequest (data) {
         case 'addItem':
             url = `${url}/${data.itemtype.name}`
             myInit = { 
-                method: 'POST',
+                method: 'GET',
                 body: JSON.stringify({input: data.input})
             }            
+        break
+
+        case 'getFullSession':
+            url = `${url}/getFullSession`
+            myInit = { method: 'GET'}            
         break
 
         default:

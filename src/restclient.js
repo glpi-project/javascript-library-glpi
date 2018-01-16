@@ -146,6 +146,24 @@ class GlpiRestClient {
             }
         })
     }
+
+    getFullSession () {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'getFullSession'
+                }
+                this._makeRequest( prepareRequest(data), 'getFullSession', (promise) => {
+                    promise.then(response => {
+                        resolve ( response ) 
+                    })
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiRestClient
