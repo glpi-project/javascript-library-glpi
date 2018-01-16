@@ -11,11 +11,7 @@ function prepareRequest (data) {
     if (config.appToken) {
         myHeaders.append('App-Token', config.appToken)
     }
-
-    if (config.sessionToken) {
-        myHeaders.append('Authorization', `user_token ${config.sessionToken}`)        
-    }
-
+                         
     switch (data.function) {
         case 'initSessionByCredentials': 
             myHeaders.append('Authorization', `Basic ${Buffer.from(`${data.userName}:${data.userPassword}`).toString('base64')}`)
@@ -26,8 +22,17 @@ function prepareRequest (data) {
             url = `${url}/initSession?user_token=${data.userToken}`
             myInit = { method: 'GET' }
         break
+        case 'killSession': 
+            myHeaders.append('Accept', 'text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8')
+            url = `${url}/killSession`
+            myInit = { method: 'GET' }
+        break
         default:
         break
+    }
+
+    if (config.sessionToken) {
+        url = `${url}?session_token=${config.sessionToken}`        
     }
 
     myInit = {
