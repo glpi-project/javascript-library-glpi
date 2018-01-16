@@ -32,14 +32,30 @@ class GlpiRestClient {
         config.appToken = appToken
     }
 
-    _makeRequest (myRequest, responseHandler) {
+    _makeRequest (myRequest, funct, responseHandler) {
         fetch (myRequest)
             .then((resp) => {        
-                if (resp.headers.get('Content-Type').indexOf("application/json") >= 0) {
-                    responseHandler(resp.json())
-                } else {
-                    responseHandler(resp.text())
+  
+                switch (funct) {
+
+                    case 'initSessionByCredentials':
+                    case 'initSessionByUserToken':
+                        responseHandler(resp.json())
+                    break
+
+                    case 'killSession':
+                        if (resp.ok) {
+                            responseHandler(resp.text())                            
+                        } else {
+                            responseHandler(resp.json()) 
+                        }
+                    break
+                    
+                    default:
+                        responseHandler(resp.text())
+                    break
                 }
+
             }) 
             .catch((err) => {
                 responseHandler(err)
@@ -54,11 +70,15 @@ class GlpiRestClient {
                     userName,
                     userPassword
                 }
-                this._makeRequest( prepareRequest(data), (response) => {
-                    if (response.session_token) {
-                        config.sessionToken = response.session_token
-                    }
-                    resolve ( response ) 
+                this._makeRequest( prepareRequest(data), 'initSessionByCredentials', (promise) => {
+                    promise.then(response => {
+                        console.log('response')
+                        console.log(response)
+                        if (response.session_token) {
+                            config.sessionToken = response.session_token
+                        }
+                        resolve ( response ) 
+                    })
                 })
             }
             catch (err) {
@@ -74,11 +94,32 @@ class GlpiRestClient {
                     function: 'initSessionByUserToken',
                     userToken
                 }
-                this._makeRequest( prepareRequest(data), (response) => {
-                    if (response.session_token) {
-                        config.sessionToken = response.session_token
-                    }
-                    resolve ( response ) 
+                this._makeRequest( prepareRequest(data), 'initSessionByUserToken', (promise) => {
+                    promise.then(response => {
+                        if (response.session_token) {
+                            config.sessionToken = response.session_token
+                        }
+                        resolve ( response ) 
+                    })
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    killSession () {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'killSession'
+                }
+                this._makeRequest( prepareRequest(data), 'killSession', (promise) => {
+                    promise.then(response => {
+                        config.sessionToken = ''
+                        resolve ( response ) 
+                    })
                 })
             }
             catch (err) {
