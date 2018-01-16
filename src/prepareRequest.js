@@ -18,8 +18,12 @@ function prepareRequest (data) {
 
     switch (data.function) {
         case 'initSessionByCredentials': 
-            myHeaders.append('Authorization', `Basic  ${Buffer.from(`${data.userName}:${data.userPassword}`).toString('base64')}`)
+            myHeaders.append('Authorization', `Basic ${Buffer.from(`${data.userName}:${data.userPassword}`).toString('base64')}`)
             url = `${url}/initSession`
+            myInit = { method: 'GET' }
+        break
+        case 'initSessionByUserToken': 
+            url = `${url}/initSession?user_token=${data.userToken}`
             myInit = { method: 'GET' }
         break
         default:
@@ -30,7 +34,7 @@ function prepareRequest (data) {
         ...myInit,
         headers: myHeaders
     }
-
+    
     return new Request(url, myInit)
 }
 
