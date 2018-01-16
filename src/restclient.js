@@ -1,34 +1,35 @@
 import prepareRequest from './prepareRequest'
+import config from './config'
 
 class GlpiRestClient { 
     constructor (url, appToken = '') {
-        this._url = url
-        this._sessionToken = ''
-        this._appToken = appToken
+        config.url = url
+        config.appToken = appToken
+        config.sessionToken = ''
     }
 
     get url () {
-        return this._url
+        return config.url
     }
 
     set url (url) {
-        this._url = url
+        config.url = url
     }
 
     get sessionToken () {
-        return this._sessionToken
+        return config.sessionToken
     }
 
     set sessionToken (sessionToken) {
-        if (sessionToken) this._sessionToken = sessionToken
+        config.sessionToken = sessionToken
     }
 
     get appToken () {
-        return this._appToken
+        return config.appToken
     }
 
     set appToken (appToken) {
-        if (appToken) this._appToken = appToken
+        config.appToken = appToken
     }
 
     _makeRequest (myRequest, responseHandler) {
@@ -50,20 +51,14 @@ class GlpiRestClient {
             try {
                 const data = {
                     function: 'initSessionByCredentials',
-                    endpoint: 'initSession',
-                    method: 'GET',
-                    url: this._url,
-                    appToken: this._appToken,
                     userName,
                     userPassword
                 }
-
-                const myRequest = prepareRequest(data)
-
-                this._makeRequest(myRequest, (response) => {
-                    resolve (
-                        response
-                    ) 
+                this._makeRequest( prepareRequest(data), (response) => {
+                    if (response.session_token) {
+                        config.sessionToken = response.session_token
+                    }
+                    resolve ( response ) 
                 })
             }
             catch (err) {
