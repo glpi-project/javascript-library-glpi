@@ -182,6 +182,24 @@ class GlpiRestClient {
             }
         })
     }
+
+    getMyProfiles () {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'getMyProfiles'
+                }
+                this._makeRequest( prepareRequest(data), 'getMyProfiles', (promise) => {
+                    promise.then(response => {
+                        resolve ( response ) 
+                    })
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiRestClient
