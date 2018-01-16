@@ -36,7 +36,7 @@ This library created in JavaScript features several functionalities common to al
 * Batching
 * Zero dependencies
 
-You will be able to call all the methods that belong to the [GLPI REST API](https://github.com/glpi-project/glpi/blob/master/apirest.md), for more information visit the [project's website](https://flyve.org/javascript-library-glpi/).
+You will be able to call all the methods that belong to the [GLPI REST API](https://github.com/glpi-project/glpi/blob/master/apirest.md), for more information visit the [project's website](http://flyve.org/javascript-library-glpi/).
 
 ## Build Status
 
@@ -52,13 +52,13 @@ You will be able to call all the methods that belong to the [GLPI REST API](http
 
 ## Documentation
 
-We maintain a detailed documentation of the project on the [website](https://flyve.org/javascript-library-glpi/).
+We maintain a detailed documentation of the project on the [website](http://flyve.org/javascript-library-glpi/).
 
 ## Versioning
 
 In order to provide transparency on our release cycle and to maintain backward compatibility, GLPI is maintained under [the Semantic Versioning guidelines](http://semver.org/). We are committed to following and complying with the rules, the best we can.
 
-See [the tags section of our GitHub project](https://github.com/glpi-project/swift-library-glpi/tags) for changelogs for each release version of GLPI. Release announcement posts on [the official Teclib' blog](http://www.teclib-edition.com/en/communities/blog-posts/) contain summaries of the most noteworthy changes made in each release.
+See [the tags section of our GitHub project](https://github.com/glpi-project/javascript-library-glpi/tags) for changelogs for each release version of GLPI. Release announcement posts on [the official Teclib' blog](http://www.teclib-edition.com/en/communities/blog-posts/) contain summaries of the most noteworthy changes made in each release.
 
 ## Contact
 
@@ -68,7 +68,7 @@ You can also chat with us via IRC in [#GLPI on freenode](http://webchat.freenode
 ## Contribute
 
 Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
-guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/glpi-project/swift-library-glpi/issues).
+guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/glpi-project/javascript-library-glpi/issues).
 
 ## Copying
 
