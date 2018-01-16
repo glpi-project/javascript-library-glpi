@@ -164,6 +164,24 @@ class GlpiRestClient {
             }
         })
     }
+
+    getActiveProfile () {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'getActiveProfile'
+                }
+                this._makeRequest( prepareRequest(data), 'getActiveProfile', (promise) => {
+                    promise.then(response => {
+                        resolve ( response ) 
+                    })
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiRestClient

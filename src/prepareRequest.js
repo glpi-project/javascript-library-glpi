@@ -43,6 +43,11 @@ function prepareRequest (data) {
             myInit = { method: 'GET'}            
         break
 
+        case 'getActiveProfile':
+            url = `${url}/getActiveProfile`
+            myInit = { method: 'GET'}            
+        break
+
         default:
         break
     }
