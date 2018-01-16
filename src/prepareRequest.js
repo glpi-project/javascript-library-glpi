@@ -53,7 +53,11 @@ function prepareRequest (data) {
             myInit = { method: 'GET'}            
         break
 
-
+        case 'getMyEntities':
+            url = `${url}/getMyEntities`
+            myInit = { method: 'GET'}            
+        break
+        
         default:
         break
     }
