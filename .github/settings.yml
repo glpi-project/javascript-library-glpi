@@ -1,7 +1,7 @@
 repository:
   name: javascript-library-glpi
   description: GLPI API Client Library for Javascript
-  homepage: https://flyve.org/javascript-library-glpi/
+  homepage: http://flyve.org/javascript-library-glpi/
   topics: glpi-api, javascript, library
   private: false
   has_issues: true
