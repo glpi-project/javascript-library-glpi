@@ -67,8 +67,6 @@ class GlpiRestClient {
                 }
                 this._makeRequest( prepareRequest(data), 'initSessionByCredentials', (promise) => {
                     promise.then(response => {
-                        console.log('response')
-                        console.log(response)
                         if (response.session_token) {
                             config.sessionToken = response.session_token
                         }
