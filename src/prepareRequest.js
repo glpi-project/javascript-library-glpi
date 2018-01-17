@@ -33,7 +33,7 @@ function prepareRequest (data) {
         case 'addItem':
             url = `${url}/${data.itemtype.name}`
             myInit = { 
-                method: 'GET',
+                method: 'POST',
                 body: JSON.stringify({input: data.input})
             }            
         break
