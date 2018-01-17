@@ -253,6 +253,65 @@ class GlpiRestClient {
         })
     }
 
+    registerUser (userToken, userData) {
+        return new Promise((resolve, reject) => {
+            try {
+                if (Array.isArray(userData)) {
+                    userData.forEach(element => {
+                        if (!element.name) {
+                            reject('missing name in a user')
+                        }
+                        if (!element.realname) {
+                            reject('missing realname in a user')
+                        }           
+                        if (!element.password) {
+                            reject('missing password in a user')
+                        } 
+                        if (!element.password2) {
+                            reject('missing password2 in a user')
+                        }                    
+                    })
+                } else {
+                    
+                    if (!userData.name) {
+                        reject('missing name')
+                    }
+                    if (!userData.realname) {
+                        reject('missing realname')
+                    }           
+                    if (!userData.password) {
+                        reject('missing password')
+                    } 
+                    if (!userData.password2) {
+                        reject('missing password2')
+                    }       
+                }
+                this.initSessionByUserToken(userToken)
+                    .then(res1 => {
+                        this.addItem(ITEMTYPE.User, userData)
+                            .then(res2 => {
+                                this.killSession()
+                                    .then(res3 => {
+                                        resolve ( res2 ) 
+                                    })
+                                    .catch(err3 => {
+                                        reject(err3)
+                                    })
+                            })
+                            .catch (err2 => {
+                                reject(err2)
+                            })
+                    })
+                    .catch(err1 => {
+                        reject(err1)
+                    })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
 }
 
 export default GlpiRestClient
