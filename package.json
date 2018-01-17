@@ -1,6 +1,6 @@
 {
   "name": "javascript-library-glpi",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "GLPI API Client Library for javascript",
   "main": "lib/GlpiRestClient.js",
   "repository": "git@github.com:flyve-mdm/javascript-library-glpi.git",

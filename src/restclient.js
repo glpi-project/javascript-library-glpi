@@ -3,6 +3,7 @@ import config from './config'
 import ITEMTYPE from './itemtype.json'
 
 class GlpiRestClient { 
+    
     constructor ({url, appToken}) {
         config.url = url
         config.appToken = appToken

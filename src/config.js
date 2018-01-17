@@ -1,5 +1,5 @@
 export default {
-    url: undefined,
-    appToken: undefined,
-    sessionToken: undefined
+    url: null,
+    appToken: null,
+    sessionToken: null
 }
