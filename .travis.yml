@@ -7,4 +7,5 @@ install:
   - yarn install
   - sudo apt-get install jq
 script:
+  - ci/scripts/git_config.sh
   - ci/scripts/build.sh
