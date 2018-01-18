@@ -2,7 +2,7 @@
 
 git checkout "$TRAVIS_BRANCH"
 yarn release -t ''
-export GIT_TAG=$(jq -r ".version" package.json)
+GIT_TAG=$(jq -r ".version" package.json)
 git reset HEAD^1
 
 yarn build 
