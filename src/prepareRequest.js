@@ -69,7 +69,12 @@ function prepareRequest (data) {
         break
         
         case 'getAllItems': 
-            url = `${url}/${data.itemtype.name}`
+            url = `${url}/${data.itemtype.name}/${ data.queryString ? `?${data.queryString}`: '' }`
+            myInit = { method: 'GET' } 
+        break
+
+        case 'getAnItem': 
+            url = `${url}/${data.itemtype.name}/${data.id}${ data.queryString ? `?${data.queryString}`: '' }`
             myInit = { method: 'GET' } 
         break
         
