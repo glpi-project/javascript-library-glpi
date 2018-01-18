@@ -350,6 +350,38 @@ class GlpiRestClient {
         })
     }
 
+    getSubItems (itemtype, id, subItemtype, queryString) {
+        return new Promise((resolve, reject) => {
+            try {
+                if (!itemtype) reject ('Invalid itemtype')
+                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
+                if (!subItemtype) reject ('Invalid subItemtype')
+                if (subItemtype !== ITEMTYPE[subItemtype.name]) reject ('Invalid subItemtype')
+
+                const data = {
+                    function: 'getSubItems',
+                    itemtype,
+                    queryString,
+                    subItemtype,
+                    id
+                }
+
+                this._makeRequest( prepareRequest(data), 'getSubItems', (promise, isOk) => {
+                    promise.then(response => {
+                        if (isOk) {
+                            resolve (response) 
+                        } else {
+                            reject (response)
+                        }
+                    })
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
     registerUser (userToken, userData) {
         return new Promise((resolve, reject) => {
             try {
