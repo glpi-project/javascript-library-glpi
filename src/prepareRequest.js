@@ -93,6 +93,14 @@ function prepareRequest (data) {
             url = `${url}/${data.itemtype.name}/${data.id}/${data.subItemtype.name}${queryString ? queryString : ''}`
             myInit = { method: 'GET' } 
         break
+
+        case 'deleteItem': 
+            url = `${url}/${data.itemtype.name}/${data.id ? data.id : ''}${ queryString ? queryString : '' }`
+            myInit = { 
+                method: 'DELETE',
+                body: JSON.stringify({input: data.input})
+            } 
+        break
         
         default:
         break
@@ -102,6 +110,7 @@ function prepareRequest (data) {
         url = `${url}${queryString ? '' : '?'}session_token=${config.sessionToken}`        
     }
 
+    console.log(url)
     myInit = {
         ...myInit,
         headers: myHeaders
