@@ -293,6 +293,34 @@ class GlpiRestClient {
         })
     }
 
+    getAllItems (itemtype, queryString) {
+        return new Promise((resolve, reject) => {
+            try {
+                if (!itemtype) reject ('Invalid itemtype')
+                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
+
+                const data = {
+                    function: 'getAllItems',
+                    itemtype,
+                    queryString
+                }
+
+                this._makeRequest( prepareRequest(data), 'getAllItems', (promise, isOk) => {
+                    promise.then(response => {
+                        if (isOk) {
+                            resolve (response) 
+                        } else {
+                            reject (response)
+                        }
+                    })
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
     registerUser (userToken, userData) {
         return new Promise((resolve, reject) => {
             try {
@@ -351,7 +379,6 @@ class GlpiRestClient {
             }
         })
     }
-
 }
 
 export default GlpiRestClient

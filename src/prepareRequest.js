@@ -68,6 +68,11 @@ function prepareRequest (data) {
             myInit = { method: 'GET'}            
         break
         
+        case 'getAllItems': 
+            url = `${url}/${data.itemtype.name}`
+            myInit = { method: 'GET' } 
+        break
+        
         default:
         break
     }
