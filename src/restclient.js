@@ -66,16 +66,20 @@ class GlpiRestClient {
                     userPassword
                 }
                 this._makeRequest( prepareRequest(data), 'initSessionByCredentials', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            if (response.session_token) {
-                                config.sessionToken = response.session_token
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                if (response.session_token) {
+                                    config.sessionToken = response.session_token
+                                }
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
                             }
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -92,16 +96,20 @@ class GlpiRestClient {
                     userToken
                 }
                 this._makeRequest( prepareRequest(data), 'initSessionByUserToken', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            if (response.session_token) {
-                                config.sessionToken = response.session_token
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                if (response.session_token) {
+                                    config.sessionToken = response.session_token
+                                }
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
                             }
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -117,14 +125,18 @@ class GlpiRestClient {
                     function: 'killSession'
                 }
                 this._makeRequest( prepareRequest(data), 'killSession', (promise, isOk) => {
-                    promise.then(response => {
-                        config.sessionToken = ''
-                        if (isOk) {
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            config.sessionToken = ''
+                            if (isOk) {
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -145,13 +157,17 @@ class GlpiRestClient {
                         input
                     }
                     this._makeRequest( prepareRequest(data), 'addItem', (promise, isOk) => {
-                        promise.then(response => {
-                            if (isOk) {
-                                resolve ( response ) 
-                            } else {
-                                reject (response)
-                            }
-                        })
+                        if (promise.then) {
+                            promise.then(response => {
+                                if (isOk) {
+                                    resolve ( response ) 
+                                } else {
+                                    reject (response)
+                                }
+                            })
+                        } else {
+                            reject (promise)
+                        }
                     })
                 }
             }
@@ -168,13 +184,17 @@ class GlpiRestClient {
                     function: 'getFullSession'
                 }
                 this._makeRequest( prepareRequest(data), 'getFullSession', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -190,13 +210,17 @@ class GlpiRestClient {
                     function: 'getActiveProfile'
                 }
                 this._makeRequest( prepareRequest(data), 'getActiveProfile', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -212,13 +236,17 @@ class GlpiRestClient {
                     function: 'getMyProfiles'
                 }
                 this._makeRequest( prepareRequest(data), 'getMyProfiles', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -234,13 +262,17 @@ class GlpiRestClient {
                     function: 'getMyEntities'
                 }
                 this._makeRequest( prepareRequest(data), 'getMyEntities', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -256,13 +288,17 @@ class GlpiRestClient {
                     function: 'getActiveEntities'
                 }
                 this._makeRequest( prepareRequest(data), 'getActiveEntities', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -278,13 +314,17 @@ class GlpiRestClient {
                     function: 'getGlpiConfig'
                 }
                 this._makeRequest( prepareRequest(data), 'getGlpiConfig', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve ( response ) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve ( response ) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -306,13 +346,17 @@ class GlpiRestClient {
                 }
 
                 this._makeRequest( prepareRequest(data), 'getAllItems', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve (response) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve (response) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -335,13 +379,17 @@ class GlpiRestClient {
                 }
 
                 this._makeRequest( prepareRequest(data), 'getAnItem', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve (response) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve (response) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
@@ -367,13 +415,17 @@ class GlpiRestClient {
                 }
 
                 this._makeRequest( prepareRequest(data), 'getSubItems', (promise, isOk) => {
-                    promise.then(response => {
-                        if (isOk) {
-                            resolve (response) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve (response) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
                 })
             }
             catch (err) {
