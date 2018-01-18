@@ -440,6 +440,45 @@ class GlpiRestClient {
             }
         })
     }
+
+    login (userName, userPassword) {
+        return new Promise((resolve, reject) => {
+            try {
+                this.initSessionByCredentials(userName, userPassword)
+                    .then(res1 => {
+                        this.getFullSession()
+                            .then(res2 => {
+                                this.getAnItem(ITEMTYPE.User, res2.session.glpiID)
+                                    .then(res3 => {
+                                        this.getSubItems(ITEMTYPE.User, res2.session.glpiID, ITEMTYPE.UserEmail)
+                                            .then(res4 => {
+                                                resolve ({
+                                                    sessionToken: res1.session_token,
+                                                    userData: res3, 
+                                                    userEmails: res4
+                                                })
+                                            })
+                                            .catch(err4 => {
+                                                reject(err4)
+                                            })
+                                    })
+                                    .catch(err3 => {
+                                        reject(err3)
+                                    })
+                            })
+                            .catch(err2 => {
+                                reject(err2)
+                            })
+                    })
+                    .catch(err1 => {
+                        reject(err1)
+                    })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiRestClient
