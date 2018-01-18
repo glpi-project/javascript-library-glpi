@@ -434,6 +434,40 @@ class GlpiRestClient {
         })
     }
 
+    deleteItem (itemtype, id, input, queryString) {
+        return new Promise((resolve, reject) => {
+            try {
+                if (!itemtype) reject ('Invalid itemtype')
+                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
+
+                const data = {
+                    function: 'deleteItem',
+                    itemtype,
+                    queryString,
+                    input,
+                    id
+                }
+
+                this._makeRequest( prepareRequest(data), 'deleteItem', (promise, isOk) => {
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve (response) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
     registerUser (userToken, userData) {
         return new Promise((resolve, reject) => {
             try {
