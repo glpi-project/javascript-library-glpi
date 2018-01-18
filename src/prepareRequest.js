@@ -5,13 +5,24 @@ function prepareRequest (data) {
     let myHeaders = new Headers()
     let myInit = {}
     let url = config.url
-    
+    let queryString = null
+
     myHeaders.append('Content-Type', 'application/json')
 
     if (config.appToken) {
         myHeaders.append('App-Token', config.appToken)
     }
                          
+    if (data.queryString) {
+        queryString = '?'
+        for (const key in data.queryString) {
+            if (data.queryString.hasOwnProperty(key)) {
+                const element = data.queryString[key]
+                queryString+= `${key}=${element}&&`
+            }
+        }
+    }
+
     switch (data.function) {
 
         case 'initSessionByCredentials': 
@@ -69,17 +80,17 @@ function prepareRequest (data) {
         break
         
         case 'getAllItems': 
-            url = `${url}/${data.itemtype.name}/${ data.queryString ? `?${data.queryString}`: '' }`
+            url = `${url}/${data.itemtype.name}/${queryString ? queryString : ''}`
             myInit = { method: 'GET' } 
         break
 
         case 'getAnItem': 
-            url = `${url}/${data.itemtype.name}/${data.id}${ data.queryString ? `?${data.queryString}`: '' }`
+            url = `${url}/${data.itemtype.name}/${data.id}${queryString ? queryString : ''}`
             myInit = { method: 'GET' } 
         break
 
         case 'getSubItems': 
-            url = `${url}/${data.itemtype.name}/${data.id}/${data.subItemtype.name}${ data.queryString ? `?${data.queryString}`: '' }`
+            url = `${url}/${data.itemtype.name}/${data.id}/${data.subItemtype.name}${queryString ? queryString : ''}`
             myInit = { method: 'GET' } 
         break
         
@@ -88,7 +99,7 @@ function prepareRequest (data) {
     }
 
     if (config.sessionToken) {
-        url = `${url}?session_token=${config.sessionToken}`        
+        url = `${url}${queryString ? '' : '?'}session_token=${config.sessionToken}`        
     }
 
     myInit = {
