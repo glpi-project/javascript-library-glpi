@@ -118,7 +118,6 @@ function prepareRequest (data) {
         url = `${url}${queryString ? '' : '?'}session_token=${config.sessionToken}`        
     }
 
-    console.log(url)
     myInit = {
         ...myInit,
         headers: myHeaders
