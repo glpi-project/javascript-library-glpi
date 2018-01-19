@@ -101,6 +101,14 @@ function prepareRequest (data) {
                 body: JSON.stringify({input: data.input})
             } 
         break
+            
+        case 'updateItem':
+            url = `${url}/${data.itemtype.name}/${data.id ? data.id : ''}`
+            myInit = { 
+                method: 'PUT',
+                body: JSON.stringify({input: data.input})
+            } 
+        break
         
         default:
         break
