@@ -42,7 +42,7 @@ function prepareRequest (data) {
         break
 
         case 'addItem':
-            url = `${url}/${data.itemtype.name}`
+            url = `${url}/${data.itemtype}`
             myInit = { 
                 method: 'POST',
                 body: JSON.stringify({input: data.input})
@@ -80,22 +80,22 @@ function prepareRequest (data) {
         break
         
         case 'getAllItems': 
-            url = `${url}/${data.itemtype.name}/${queryString ? queryString : ''}`
+            url = `${url}/${data.itemtype}/${queryString ? queryString : ''}`
             myInit = { method: 'GET' } 
         break
 
         case 'getAnItem': 
-            url = `${url}/${data.itemtype.name}/${data.id}${queryString ? queryString : ''}`
+            url = `${url}/${data.itemtype}/${data.id}${queryString ? queryString : ''}`
             myInit = { method: 'GET' } 
         break
 
         case 'getSubItems': 
-            url = `${url}/${data.itemtype.name}/${data.id}/${data.subItemtype.name}${queryString ? queryString : ''}`
+            url = `${url}/${data.itemtype}/${data.id}/${data.subItemtype}${queryString ? queryString : ''}`
             myInit = { method: 'GET' } 
         break
 
         case 'deleteItem': 
-            url = `${url}/${data.itemtype.name}/${data.id ? data.id : ''}${ queryString ? queryString : '' }`
+            url = `${url}/${data.itemtype}/${data.id ? data.id : ''}${ queryString ? queryString : '' }`
             myInit = { 
                 method: 'DELETE',
                 body: JSON.stringify({input: data.input})
@@ -103,7 +103,7 @@ function prepareRequest (data) {
         break
             
         case 'updateItem':
-            url = `${url}/${data.itemtype.name}/${data.id ? data.id : ''}`
+            url = `${url}/${data.itemtype}/${data.id ? data.id : ''}`
             myInit = { 
                 method: 'PUT',
                 body: JSON.stringify({input: data.input})

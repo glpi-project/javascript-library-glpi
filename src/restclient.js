@@ -47,7 +47,7 @@ class GlpiRestClient {
                 break
                 
                 default:
-                    responseHandler(response.json(), response.ok)
+                    responseHandler(await response.json(), response.ok)
                 break   
             }
         }
@@ -125,7 +125,7 @@ class GlpiRestClient {
     addItem (itemtype, input) {
         return new Promise((resolve, reject) => {
             try {
-                if (!itemtype || itemtype !== ITEMTYPE[itemtype.name]) {
+                if (!itemtype) {
                     reject('Invalid itemtype')
                 } else {
                     const data = {
@@ -272,7 +272,6 @@ class GlpiRestClient {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
-                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
 
                 const data = {
                     function: 'getAllItems',
@@ -298,7 +297,6 @@ class GlpiRestClient {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
-                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
 
                 const data = {
                     function: 'getAnItem',
@@ -325,9 +323,7 @@ class GlpiRestClient {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
-                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
                 if (!subItemtype) reject ('Invalid subItemtype')
-                if (subItemtype !== ITEMTYPE[subItemtype.name]) reject ('Invalid subItemtype')
 
                 const data = {
                     function: 'getSubItems',
@@ -355,7 +351,6 @@ class GlpiRestClient {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
-                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
 
                 const data = {
                     function: 'deleteItem',
@@ -383,7 +378,6 @@ class GlpiRestClient {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
-                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
 
                 const data = {
                     function: 'updateItem',
