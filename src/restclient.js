@@ -463,6 +463,19 @@ class GlpiRestClient {
             }
         })
     }
+
+    getDevices () {
+        return new Promise( async (resolve, reject) => {
+            try {
+                resolve (
+                    await this.getAllItems('PluginFlyvemdmAgent')
+                )
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiRestClient
