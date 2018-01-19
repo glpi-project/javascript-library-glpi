@@ -476,6 +476,20 @@ class GlpiRestClient {
             }
         })
     }
+
+    getFiles () {
+        return new Promise( async (resolve, reject) => {
+            try {
+                resolve (
+                    await this.getAllItems('PluginFlyvemdmFile')
+                )
+            }
+            catch (err) {
+                reject(err)
+            }
+        })   
+    }
+    
 }
 
 export default GlpiRestClient
