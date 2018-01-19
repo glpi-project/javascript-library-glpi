@@ -516,6 +516,18 @@ class GlpiRestClient {
         })   
     }
     
+    getUsers () {
+        return new Promise( async (resolve, reject) => {
+            try {
+                resolve (
+                    await this.getAllItems('User')
+                )
+            }
+            catch (err) {
+                reject(err)
+            }
+        })      
+    }
 }
 
 export default GlpiRestClient
