@@ -489,6 +489,19 @@ class GlpiRestClient {
             }
         })   
     }
+
+    getInvitations () {
+        return new Promise( async (resolve, reject) => {
+            try {
+                resolve (
+                    await this.getAllItems('PluginFlyvemdmInvitation')
+                )
+            }
+            catch (err) {
+                reject(err)
+            }
+        })   
+    }
     
 }
 
