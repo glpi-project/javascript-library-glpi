@@ -502,6 +502,19 @@ class GlpiRestClient {
             }
         })   
     }
+
+    getApplications () {
+        return new Promise( async (resolve, reject) => {
+            try {
+                resolve (
+                    await this.getAllItems('PluginFlyvemdmPackage')
+                )
+            }
+            catch (err) {
+                reject(err)
+            }
+        })   
+    }
     
 }
 
