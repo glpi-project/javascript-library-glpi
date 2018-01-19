@@ -468,6 +468,39 @@ class GlpiRestClient {
         })
     }
 
+    updateItem (itemtype, id, input) {
+        return new Promise((resolve, reject) => {
+            try {
+                if (!itemtype) reject ('Invalid itemtype')
+                if (itemtype !== ITEMTYPE[itemtype.name]) reject ('Invalid itemtype')
+
+                const data = {
+                    function: 'updateItem',
+                    itemtype,
+                    input,
+                    id
+                }
+
+                this._makeRequest( prepareRequest(data), 'updateItem', (promise, isOk) => {
+                    if (promise.then) {
+                        promise.then(response => {
+                            if (isOk) {
+                                resolve (response) 
+                            } else {
+                                reject (response)
+                            }
+                        })
+                    } else {
+                        reject (promise)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
     registerUser (userToken, userData) {
         return new Promise((resolve, reject) => {
             try {
