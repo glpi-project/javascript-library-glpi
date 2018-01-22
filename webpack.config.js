@@ -2,7 +2,7 @@ var path = require('path')
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: ['babel-polyfill', './src/index.js'],
     output: {
         path: path.resolve(__dirname, 'lib'),
         filename: 'GlpiRestClient.js',
