@@ -52,7 +52,7 @@ class GlpiRestClient {
             }
         }
         catch (err) {
-            responseHandler(err, false)
+            responseHandler(['Error', err.toString()], false)
         }
     }
 
