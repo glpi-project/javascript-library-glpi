@@ -400,6 +400,29 @@ class GlpiRestClient {
         })
     }
 
+    changeActiveEntities (entitiesId, isRecursive) {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'changeActiveEntities',
+                    entitiesId,
+                    isRecursive
+                }
+
+                this._makeRequest( prepareRequest(data), 'changeActiveEntities', (response, isOk) => {
+                    if (isOk) {
+                        resolve ( response ) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
     registerUser (userToken, userData) {
         return new Promise(async (resolve, reject) => {
             try {
