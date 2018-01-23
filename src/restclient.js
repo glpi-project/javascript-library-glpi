@@ -39,11 +39,19 @@ class GlpiRestClient {
             const response = await fetch (myRequest)
             switch (functionName) {
                 case 'killSession':
-                if (response.ok) {
+                    if (response.ok) {
                         responseHandler(await response.text(), response.ok)                            
                     } else {
                         responseHandler(await response.json(), response.ok) 
                     }
+                break
+
+                case 'changeActiveProfile':
+                    if (response.ok) {
+                        responseHandler(await response.text(), response.ok)                            
+                    } else {
+                        responseHandler(await response.json(), response.ok) 
+                    } 
                 break
                 
                 default:
@@ -410,6 +418,28 @@ class GlpiRestClient {
                 }
 
                 this._makeRequest( prepareRequest(data), 'changeActiveEntities', (response, isOk) => {
+                    if (isOk) {
+                        resolve ( response ) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
+    changeActiveProfile (profilesId) {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'changeActiveProfile',
+                    profilesId
+                }
+
+                this._makeRequest( prepareRequest(data), 'changeActiveProfile', (response, isOk) => {
                     if (isOk) {
                         resolve ( response ) 
                     } else {
