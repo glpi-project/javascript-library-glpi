@@ -1,5 +1,28 @@
 import config from './config'
 
+function createQueryString (str) {
+    let queryString = ''
+    if (Array.isArray(str)) {
+        for (let index = 0; index < str.length; index++) {
+            const element1 = str[index]
+            for (const key in element1) {
+                if (element1.hasOwnProperty(key)) {
+                    const element2 = element1[key]
+                    queryString += `items[${index}][${key}]=${element2}&`
+                }
+            }
+        }
+    } else {
+        for (const key in str) {
+            if (str.hasOwnProperty(key)) {
+                const element = str[key]
+                queryString+= `${key}=${element}&`
+            }
+        }
+    }
+    return queryString
+}
+
 function prepareRequest (data) {
 
     let myHeaders = new Headers()
@@ -15,13 +38,7 @@ function prepareRequest (data) {
     }
                          
     if (data.queryString) {
-        queryString = '?'
-        for (const key in data.queryString) {
-            if (data.queryString.hasOwnProperty(key)) {
-                const element = data.queryString[key]
-                queryString+= `${key}=${element}&&`
-            }
-        }
+        queryString = `?${createQueryString(data.queryString)}`
     }
 
     switch (data.function) {
@@ -130,6 +147,15 @@ function prepareRequest (data) {
                 method: 'POST',
                 body: JSON.stringify(body)
             } 
+        break
+
+        case 'getMultipleItems':
+
+            let queryString = '?'
+
+            url = `${url}/getMultipleItems?${createQueryString(data.items)}${createQueryString(data.options)}`
+
+            myInit = { method: 'GET' } 
         break
 
         default:
