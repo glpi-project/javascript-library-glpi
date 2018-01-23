@@ -122,6 +122,16 @@ function prepareRequest (data) {
             } 
         break
 
+        case 'changeActiveProfile':
+            url = `${url}/changeActiveProfile/`
+            body = {}
+            if (data.profilesId) body = {"profiles_id": data.profilesId}
+            myInit = { 
+                method: 'POST',
+                body: JSON.stringify(body)
+            } 
+        break
+
         default:
         break
     }
