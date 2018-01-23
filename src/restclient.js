@@ -453,6 +453,29 @@ class GlpiRestClient {
         })
     }
 
+    getMultipleItems (items, options) {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'getMultipleItems',
+                    items,
+                    options
+                }
+
+                this._makeRequest( prepareRequest(data), 'getMultipleItems', (response, isOk) => {
+                    if (isOk) {
+                        resolve ( response ) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+
     registerUser (userToken, userData) {
         return new Promise(async (resolve, reject) => {
             try {
