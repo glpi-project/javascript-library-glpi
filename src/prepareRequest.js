@@ -6,6 +6,7 @@ function prepareRequest (data) {
     let myInit = {}
     let url = config.url
     let queryString = null
+    let body = {}    
 
     myHeaders.append('Content-Type', 'application/json')
 
@@ -101,7 +102,7 @@ function prepareRequest (data) {
                 body: JSON.stringify({input: data.input})
             } 
         break
-            
+        
         case 'updateItem':
             url = `${url}/${data.itemtype}/${data.id ? data.id : ''}`
             myInit = { 
@@ -110,6 +111,17 @@ function prepareRequest (data) {
             } 
         break
         
+        case 'changeActiveEntities':
+            url = `${url}/changeActiveEntities/`
+            body = {}
+            if (data.entitiesId) body = {"entities_id": data.entitiesId}
+            if (data.isRecursive) body = {...body, "is_recursive": data.isRecursive}
+            myInit = { 
+                method: 'POST',
+                body: JSON.stringify(body)
+            } 
+        break
+
         default:
         break
     }
