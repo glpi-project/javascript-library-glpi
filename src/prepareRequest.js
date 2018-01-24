@@ -4,10 +4,10 @@ function createQueryString (str) {
     let queryString = ''
     if (Array.isArray(str)) {
         for (let index = 0; index < str.length; index++) {
-            const element1 = str[index]
-            for (const key in element1) {
-                if (element1.hasOwnProperty(key)) {
-                    const element2 = element1[key]
+            const element = str[index]
+            for (const key in element) {
+                if (element.hasOwnProperty(key)) {
+                    const element2 = element[key]
                     queryString += `items[${index}][${key}]=${element2}&`
                 }
             }
@@ -16,7 +16,14 @@ function createQueryString (str) {
         for (const key in str) {
             if (str.hasOwnProperty(key)) {
                 const element = str[key]
-                queryString+= `${key}=${element}&`
+                if (Array.isArray(element)) {
+                    for (let index = 0; index < element.length; index++) {
+                        const element2 = element[index]
+                        queryString+= `${key}[${index}]=${element2}&`
+                    }
+                } else {
+                    queryString+= `${key}=${element}&`
+                }
             }
         }
     }
