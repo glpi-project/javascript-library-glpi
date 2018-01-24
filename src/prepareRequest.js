@@ -150,10 +150,17 @@ function prepareRequest (data) {
         break
 
         case 'getMultipleItems':
-
             queryString = `?${createQueryString(data.items)}${createQueryString(data.options)}`
 
             url = `${url}/getMultipleItems${queryString}`
+
+            myInit = { method: 'GET' } 
+        break
+
+        case 'searchItems':
+            queryString = `?${createQueryString(data.criteria)}${createQueryString(data.metacriteria)}${createQueryString(data.options)}`
+
+            url = `${url}/search/${data.itemtype}/${queryString}`
 
             myInit = { method: 'GET' } 
         break
