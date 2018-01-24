@@ -151,9 +151,9 @@ function prepareRequest (data) {
 
         case 'getMultipleItems':
 
-            let queryString = '?'
+            queryString = `?${createQueryString(data.items)}${createQueryString(data.options)}`
 
-            url = `${url}/getMultipleItems?${createQueryString(data.items)}${createQueryString(data.options)}`
+            url = `${url}/getMultipleItems${queryString}`
 
             myInit = { method: 'GET' } 
         break
