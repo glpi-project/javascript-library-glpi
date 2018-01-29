@@ -24,10 +24,14 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: configure_npm
+          command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
       
       - run:
           name: configure_git
-          command: ci/scripts/git_config.sh
+          command: ci/scripts/git_config.sh      
 
       - run:
           name: build
