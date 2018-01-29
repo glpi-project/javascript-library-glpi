@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 
-git checkout "$CIRCLE_BRANCH"
-yarn release -t ''
-GIT_TAG=$(jq -r ".version" package.json)
-git reset HEAD^1
-
-yarn build 
-
-if [ "$CIRCLE_BRANCH" = "develop" ] && [[ "$GIT_COMMIT_DESC" != *"ci(build): update library to version "* ]]
+if [ "$CIRCLE_BRANCH" = "develop" ] 
 then
-    git add lib/
-    git commit -m "ci(build): update library to version ${GIT_TAG}"
-    git push origin "$CIRCLE_BRANCH"
+    source ci/scripts/build_develop.sh
+fi
+
+if [ "$CIRCLE_BRANCH" = "master" ] 
+then
+    source ci/scripts/build_master.sh
 fi
