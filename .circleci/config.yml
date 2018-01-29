@@ -27,12 +27,18 @@ jobs:
 
       - run:
           name: configure_npm
-          command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-      
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
       - run:
           name: configure_git
-          command: ci/scripts/git_config.sh      
+          command: source ci/scripts/git_config.sh      
 
       - run:
           name: build
-          command: ci/scripts/build.sh
+          command: source ci/scripts/build.sh
+
+workflows:
+  version: 2
+  build_library:
+    jobs:
+      - build
