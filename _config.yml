@@ -2,8 +2,8 @@ title: javascript library glpi
 email: glpi@teclib.com
 twitter: glpi_project
 baseurl: "/javascript-library-glpi"
-url: "http://flyve.org"   
-image: http://flyve.org/javascript-library-glpi/images/logo2.png
+url: "https://glpi-project.github.io"   
+image: https://glpi-project.github.io/javascript-library-glpi/images/logo2.png
 
 # Build settings
 markdown: kramdown
@@ -13,7 +13,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-repository: flyve-mdm/javascript-library-glpi
+repository: glpi-project/javascript-library-glpi
 
 sass:
     style: compressed
