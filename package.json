@@ -1,5 +1,5 @@
 {
-  "name": "javascript-library-glpi",
+  "name": "@teclib/glpi-api-client",
   "version": "0.1.0",
   "description": "GLPI API Client Library for javascript",
   "main": "lib/GlpiRestClient.js",
