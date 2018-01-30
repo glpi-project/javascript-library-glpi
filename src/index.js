@@ -1,7 +1,7 @@
 import itemtype from './itemtype.json'
-import restclient from './restclient'
+import GlpiApiClient from './glpiApiClient'
 
-export default restclient
+export default GlpiApiClient
 export {
     itemtype
 }
