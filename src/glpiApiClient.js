@@ -2,7 +2,7 @@ import prepareRequest from './prepareRequest'
 import config from './config'
 import ITEMTYPE from './itemtype.json'
 
-class GlpiRestClient { 
+class GlpiApiClient { 
     
     constructor ({url, appToken}) {
         config.url = url
@@ -631,4 +631,4 @@ class GlpiRestClient {
     }
 }
 
-export default GlpiRestClient
+export default GlpiApiClient

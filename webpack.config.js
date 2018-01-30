@@ -5,8 +5,8 @@ module.exports = {
     entry: ['babel-polyfill', './src/index.js'],
     output: {
         path: path.resolve(__dirname, 'lib'),
-        filename: 'GlpiRestClient.js',
-        library: 'GlpiRestClient',
+        filename: 'GlpiApiClient.js',
+        library: 'GlpiApiClient',
         libraryTarget: 'umd'
     },
     module: {
