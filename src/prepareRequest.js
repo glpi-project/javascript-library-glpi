@@ -1,34 +1,5 @@
 import config from './config'
-
-function createQueryString (str) {
-    let queryString = ''
-    if (Array.isArray(str)) {
-        for (let index = 0; index < str.length; index++) {
-            const element = str[index]
-            for (const key in element) {
-                if (element.hasOwnProperty(key)) {
-                    const element2 = element[key]
-                    queryString += `items[${index}][${key}]=${element2}&`
-                }
-            }
-        }
-    } else {
-        for (const key in str) {
-            if (str.hasOwnProperty(key)) {
-                const element = str[key]
-                if (Array.isArray(element)) {
-                    for (let index = 0; index < element.length; index++) {
-                        const element2 = element[index]
-                        queryString+= `${key}[${index}]=${element2}&`
-                    }
-                } else {
-                    queryString+= `${key}=${element}&`
-                }
-            }
-        }
-    }
-    return queryString
-}
+import createQueryString from './createQueryString'
 
 function prepareRequest (data) {
 
@@ -45,7 +16,7 @@ function prepareRequest (data) {
     }
                          
     if (data.queryString) {
-        queryString = `?${createQueryString(data.queryString)}`
+        queryString = `?${createQueryString({items: data.queryString})}`
     }
 
     switch (data.function) {
@@ -157,7 +128,7 @@ function prepareRequest (data) {
         break
 
         case 'getMultipleItems':
-            queryString = `?${createQueryString(data.items)}${createQueryString(data.options)}`
+            queryString = `?${createQueryString({items: data.items})}${createQueryString({items: data.options})}`
 
             url = `${url}/getMultipleItems${queryString}`
 
@@ -165,7 +136,7 @@ function prepareRequest (data) {
         break
 
         case 'searchItems':
-            queryString = `?${createQueryString(data.criteria)}${createQueryString(data.metacriteria)}${createQueryString(data.options)}`
+            queryString = `?${createQueryString({criteria: data.criteria})}${createQueryString({metacriteria: data.metacriteria})}${createQueryString({items: data.options})}`
 
             url = `${url}/search/${data.itemtype}/${queryString}`
 
