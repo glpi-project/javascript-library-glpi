@@ -1,9 +1,24 @@
 {
   "name": "javascript-library-glpi",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "GLPI API Client Library for javascript",
   "main": "lib/GlpiRestClient.js",
   "repository": "git@github.com:flyve-mdm/javascript-library-glpi.git",
   "author": "Gianfranco Manganiello <gmanganiello@teclib.com>",
-  "license": "MIT"
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "standard-version": "^4.3.0",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack --watch",
+    "release": "standard-version"
+  }
 }
