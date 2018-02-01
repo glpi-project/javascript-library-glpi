@@ -629,6 +629,50 @@ class GlpiApiClient {
             }
         })      
     }
+
+    updateEmails (userID, currentEmails, newEmails) {
+        return new Promise( async (resolve, reject) => {
+            try {
+                let emailsDelete = []
+                let emailsUpdate = []
+                let emailsAdd = []
+
+                newEmails.forEach(newEmail => {
+                    if (!newEmail.id) {
+                        if (newEmail.email && newEmail.email !== '') {
+                            emailsAdd.push({...newEmail, users_id: userID})
+                        }
+                    } else {
+                        currentEmails.forEach(currentEmail => {
+                            if (currentEmail.id === newEmail.id && currentEmail.email !== newEmail.email) {
+                                emailsUpdate.push(newEmail)
+                            }
+                        })
+                    }
+                })
+                currentEmails.forEach(currentEmail => {
+                    let isDelete = true
+                    newEmails.forEach(newEmail => {
+                        if (newEmail.id === currentEmail.id) {
+                            isDelete = false
+                        }
+                    })
+                    if (isDelete) {
+                        emailsDelete.push(currentEmail)
+                    }
+                })
+
+                resolve ({
+                    delete: (emailsDelete.length > 0) ? await this.deleteItem('UserEmail', null, emailsDelete) : [],
+                    update: (emailsUpdate.length > 0) ? await this.updateItem('UserEmail', null, emailsUpdate) : [],
+                    add: (emailsAdd.length > 0) ? await this.addItem('UserEmail', emailsAdd) : []
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
 }
 
 export default GlpiApiClient
