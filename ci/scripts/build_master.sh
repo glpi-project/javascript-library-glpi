@@ -9,7 +9,7 @@ yarn build
 if [[ "$GIT_COMMIT_DESC" != *"build(npm): update library to version "* ]]
 then
     git add lib/
-    git commit -m "build(npm): update library to version ${GIT_TAG}"
+    git commit -m "build(npm): update library to version ${GIT_TAG}" --amend
     git push origin "$CIRCLE_BRANCH"
     npm publish --access public
 fi
