@@ -501,6 +501,29 @@ class GlpiApiClient {
         }) 
     }
 
+    listSearchOptions (itemtype, queryString) {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'listSearchOptions',
+                    itemtype,
+                    queryString
+                }
+
+                this._makeRequest( prepareRequest(data), 'listSearchOptions', (response, isOk) => {
+                    if (isOk) {
+                        resolve ( response ) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        }) 
+    }
+
     registerUser (userToken, userData) {
         return new Promise(async (resolve, reject) => {
             try {

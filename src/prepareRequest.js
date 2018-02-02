@@ -143,6 +143,14 @@ function prepareRequest (data) {
             myInit = { method: 'GET' } 
         break
 
+        case 'listSearchOptions':
+            queryString = `?${createQueryString({items: data.queryString})}`
+
+            url = `${url}/listSearchOptions/${data.itemtype}/${queryString}`
+
+            myInit = { method: 'GET' } 
+        break
+
         default:
         break
     }
