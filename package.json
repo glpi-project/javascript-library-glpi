@@ -1,6 +1,6 @@
 {
   "name": "@teclib/glpi-api-client",
-  "version": "0.2.0-beta.5",
+  "version": "0.2.0-beta.6",
   "description": "GLPI API Client Library for javascript",
   "main": "lib/GlpiApiClient.js",
   "repository": "git@github.com:flyve-mdm/javascript-library-glpi.git",
