@@ -3,8 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest-browsers
-    environment:
-      GIT_COMMIT_DESC: git log --format=oneline -n 1 $CIRCLE_SHA1
 
     working_directory: ~/repo
 

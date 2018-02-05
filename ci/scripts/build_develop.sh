@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 git checkout "$CIRCLE_BRANCH"
+GIT_COMMIT_DESC=$(git log --pretty=oneline -n 1 $CIRCLE_SHA1)
 yarn release -t '' --prerelease beta
 GIT_TAG=$(jq -r ".version" package.json)
 
