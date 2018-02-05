@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "GLPI API Client Library for javascript",
   "main": "lib/GlpiApiClient.js",
-  "repository": "git@github.com:flyve-mdm/javascript-library-glpi.git",
+  "repository": "git@github.com:glpi-project/javascript-library-glpi.git",
   "author": "Gianfranco Manganiello <gmanganiello@teclib.com>",
   "license": "GPL-3.0",
   "devDependencies": {
