@@ -151,6 +151,14 @@ function prepareRequest (data) {
             myInit = { method: 'GET' } 
         break
 
+        case 'getCaptcha':
+            myHeaders.set('Content-Type', 'application/octet-stream')
+            queryString = '?alt=media&&'
+            url = `${url}/PluginFlyvemdmdemoCaptcha/${data.id}/${queryString}`
+
+            myInit = { method: 'GET' } 
+        break
+
         default:
         break
     }

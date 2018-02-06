@@ -53,6 +53,14 @@ class GlpiApiClient {
                         responseHandler(await response.json(), response.ok) 
                     } 
                 break
+
+                case 'getCaptcha':
+                    if (response.ok) {
+                        responseHandler(await response.blob(), response.ok)                            
+                    } else {
+                        responseHandler(await response.json(), response.ok) 
+                    } 
+                break
                 
                 default:
                     responseHandler(await response.json(), response.ok)
@@ -695,6 +703,54 @@ class GlpiApiClient {
                 reject(err)
             }
         })
+    }
+
+    createCaptcha () {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'createCaptcha'
+                }
+
+                this._makeRequest( prepareRequest(data), 'createCaptcha', (response, isOk) => {
+                    if (isOk) {
+                        resolve (response) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        }) 
+    }
+
+    getCaptcha () {        
+        return new Promise( async (resolve, reject) => {
+            try {
+                const { id } = await this.addItem('PluginFlyvemdmdemoCaptcha', {})
+
+                const data = {
+                    function: 'getCaptcha',
+                    id
+                }
+               
+                this._makeRequest( prepareRequest(data), 'getCaptcha', (response, isOk) => {
+                    if (isOk) {
+                        resolve ({
+                            id,
+                            img: URL.createObjectURL(response)
+                        }) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        }) 
     }
 }
 
