@@ -53,6 +53,14 @@ class GlpiApiClient {
                         responseHandler(await response.json(), response.ok) 
                     } 
                 break
+
+                case 'getCaptcha':
+                    if (response.ok) {
+                        responseHandler(await response.blob(), response.ok)                            
+                    } else {
+                        responseHandler(await response.json(), response.ok) 
+                    } 
+                break
                 
                 default:
                     responseHandler(await response.json(), response.ok)
@@ -64,7 +72,7 @@ class GlpiApiClient {
         }
     }
 
-    initSessionByCredentials (userName, userPassword) {
+    initSessionByCredentials ({userName, userPassword}) {
         return new Promise((resolve, reject) => {
             try {
                 const data = {
@@ -87,7 +95,7 @@ class GlpiApiClient {
         })
     }
 
-    initSessionByUserToken (userToken) {
+    initSessionByUserToken ({userToken}) {
         return new Promise((resolve, reject) => {
             try {
                 const data = {
@@ -130,7 +138,7 @@ class GlpiApiClient {
         })
     }
 
-    addItem (itemtype, input) {
+    addItem ({itemtype, input}) {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) {
@@ -276,7 +284,7 @@ class GlpiApiClient {
         })
     }
 
-    getAllItems (itemtype, queryString) {
+    getAllItems ({itemtype, queryString}) {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
@@ -301,7 +309,7 @@ class GlpiApiClient {
         })
     }
 
-    getAnItem (itemtype, id, queryString) {
+    getAnItem ({itemtype, id, queryString}) {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
@@ -327,7 +335,7 @@ class GlpiApiClient {
         })
     }
 
-    getSubItems (itemtype, id, subItemtype, queryString) {
+    getSubItems ({itemtype, id, subItemtype, queryString}) {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
@@ -355,7 +363,7 @@ class GlpiApiClient {
         })
     }
 
-    deleteItem (itemtype, id, input, queryString) {
+    deleteItem ({itemtype, id, input, queryString}) {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
@@ -382,7 +390,7 @@ class GlpiApiClient {
         })
     }
 
-    updateItem (itemtype, id, input) {
+    updateItem ({itemtype, id, input}) {
         return new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
@@ -408,7 +416,7 @@ class GlpiApiClient {
         })
     }
 
-    changeActiveEntities (entitiesId, isRecursive) {
+    changeActiveEntities ({entitiesId, isRecursive}) {
         return new Promise((resolve, reject) => {
             try {
                 const data = {
@@ -431,7 +439,7 @@ class GlpiApiClient {
         })
     }
 
-    changeActiveProfile (profilesId) {
+    changeActiveProfile ({profilesId}) {
         return new Promise((resolve, reject) => {
             try {
                 const data = {
@@ -453,7 +461,7 @@ class GlpiApiClient {
         })
     }
 
-    getMultipleItems (items, options) {
+    getMultipleItems ({items, options}) {
         return new Promise((resolve, reject) => {
             try {
                 const data = {
@@ -476,7 +484,7 @@ class GlpiApiClient {
         })
     }
 
-    searchItems (itemtype, criteria, metacriteria, options) {
+    searchItems ({itemtype, criteria, metacriteria, options}) {
         return new Promise((resolve, reject) => {
             try {
                 const data = {
@@ -501,7 +509,7 @@ class GlpiApiClient {
         }) 
     }
 
-    listSearchOptions (itemtype, queryString) {
+    listSearchOptions ({itemtype, queryString}) {
         return new Promise((resolve, reject) => {
             try {
                 const data = {
@@ -524,7 +532,7 @@ class GlpiApiClient {
         }) 
     }
 
-    registerUser (userToken, userData) {
+    registerUser ({userToken, userData}) {
         return new Promise(async (resolve, reject) => {
             try {
                 if (Array.isArray(userData)) {
@@ -568,7 +576,7 @@ class GlpiApiClient {
         })
     }
 
-    login (userName, userPassword) {
+    login ({userName, userPassword}) {
         return new Promise( async (resolve, reject) => {
             try {
                 const sessionToken = await this.initSessionByCredentials(userName, userPassword)
@@ -653,7 +661,7 @@ class GlpiApiClient {
         })      
     }
 
-    updateEmails (userID, currentEmails, newEmails) {
+    updateEmails ({userID, currentEmails, newEmails}) {
         return new Promise( async (resolve, reject) => {
             try {
                 let emailsDelete = []
@@ -695,6 +703,54 @@ class GlpiApiClient {
                 reject(err)
             }
         })
+    }
+
+    createCaptcha () {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'createCaptcha'
+                }
+
+                this._makeRequest( prepareRequest(data), 'createCaptcha', (response, isOk) => {
+                    if (isOk) {
+                        resolve (response) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        }) 
+    }
+
+    getCaptcha () {        
+        return new Promise( async (resolve, reject) => {
+            try {
+                const { id } = await this.addItem('PluginFlyvemdmdemoCaptcha', {})
+
+                const data = {
+                    function: 'getCaptcha',
+                    id
+                }
+               
+                this._makeRequest( prepareRequest(data), 'getCaptcha', (response, isOk) => {
+                    if (isOk) {
+                        resolve ({
+                            id,
+                            img: URL.createObjectURL(response)
+                        }) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        }) 
     }
 }
 
