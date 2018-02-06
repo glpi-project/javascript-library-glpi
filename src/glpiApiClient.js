@@ -524,41 +524,11 @@ class GlpiApiClient {
         }) 
     }
 
-    registerUser (userToken, userData) {
+    registerUser (userToken, userData, itemtype) {
         return new Promise(async (resolve, reject) => {
             try {
-                if (Array.isArray(userData)) {
-                    userData.forEach(element => {
-                        if (!element.name) {
-                            reject('missing name in a user')
-                        }
-                        if (!element.realname) {
-                            reject('missing realname in a user')
-                        }           
-                        if (!element.password) {
-                            reject('missing password in a user')
-                        } 
-                        if (!element.password2) {
-                            reject('missing password2 in a user')
-                        }                    
-                    })
-                } else {
-                    if (!userData.name) {
-                        reject('missing name')
-                    }
-                    if (!userData.realname) {
-                        reject('missing realname')
-                    }           
-                    if (!userData.password) {
-                        reject('missing password')
-                    } 
-                    if (!userData.password2) {
-                        reject('missing password2')
-                    }       
-                }
-
                 await this.initSessionByUserToken(userToken)
-                const response = await this.addItem(ITEMTYPE.User, userData)
+                const response = await this.addItem(itemtype, userData)
                 await this.killSession()
                 resolve (response)
             }
