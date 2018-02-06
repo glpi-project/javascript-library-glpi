@@ -1,6 +1,6 @@
 {
   "name": "@glpi-project/javascript-library-glpi",
-  "version": "0.0.1-beta.0",
+  "version": "0.1.0-beta.0",
   "description": "GLPI API Client Library for javascript",
   "main": "lib/GlpiApiClient.js",
   "repository": "git@github.com:glpi-project/javascript-library-glpi.git",
