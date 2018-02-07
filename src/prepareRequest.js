@@ -28,7 +28,9 @@ function prepareRequest (data) {
         break
 
         case 'initSessionByUserToken': 
-            url = `${url}/initSession?user_token=${data.userToken}`
+            myHeaders.append('Authorization', `user_token ${data.userToken}`)
+            
+            url = `${url}/initSession`
             myInit = { method: 'GET' }
         break
 
@@ -165,7 +167,6 @@ function prepareRequest (data) {
 
     myInit = {
         ...myInit,
-
         headers: myInit.headers ? myInit.headers : myHeaders
     }
     
