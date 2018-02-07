@@ -144,11 +144,15 @@ function prepareRequest (data) {
         break
 
         case 'listSearchOptions':
-            queryString = `?${createQueryString({items: data.queryString})}`
-
-            url = `${url}/listSearchOptions/${data.itemtype}/${queryString}`
+            url = `${url}/listSearchOptions/${data.itemtype}/${ queryString ? queryString : '' }`
 
             myInit = { method: 'GET' } 
+        break
+
+        case 'genericRequest':
+            url = `${url}/${data.path}${ queryString ? queryString : '' }`
+
+            myInit = { ...data.requestParams } 
         break
 
         default:
@@ -161,7 +165,8 @@ function prepareRequest (data) {
 
     myInit = {
         ...myInit,
-        headers: myHeaders
+
+        headers: myInit.headers ? myInit.headers : myHeaders
     }
     
     return new Request(url, myInit)
