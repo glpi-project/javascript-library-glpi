@@ -53,6 +53,10 @@ class GlpiApiClient {
                         responseHandler(await response.json(), response.ok) 
                     } 
                 break
+
+                case 'genericRequest':
+                    responseHandler(response, response.ok)                            
+                break
                 
                 default:
                     responseHandler(await response.json(), response.ok)
@@ -665,6 +669,30 @@ class GlpiApiClient {
                 reject(err)
             }
         })
+    }
+
+    genericRequest ({path, queryString, requestParams}) {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'genericRequest',
+                    path,
+                    queryString,
+                    requestParams
+                }
+
+                this._makeRequest( prepareRequest(data), 'genericRequest', (response, isOk) => {
+                    if (isOk) {
+                        resolve (response) 
+                    } else {
+                        reject (response)
+                    }
+                })
+            }
+            catch (err) {
+                reject(err)
+            }
+        }) 
     }
 }
 
