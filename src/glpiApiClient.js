@@ -559,58 +559,6 @@ class GlpiApiClient {
             }
         })
     }
-
-    getDevices () {
-        return new Promise( async (resolve, reject) => {
-            try {
-                resolve (
-                    await this.getAllItems('PluginFlyvemdmAgent')
-                )
-            }
-            catch (err) {
-                reject(err)
-            }
-        })
-    }
-
-    getFiles () {
-        return new Promise( async (resolve, reject) => {
-            try {
-                resolve (
-                    await this.getAllItems('PluginFlyvemdmFile')
-                )
-            }
-            catch (err) {
-                reject(err)
-            }
-        })   
-    }
-
-    getInvitations () {
-        return new Promise( async (resolve, reject) => {
-            try {
-                resolve (
-                    await this.getAllItems('PluginFlyvemdmInvitation')
-                )
-            }
-            catch (err) {
-                reject(err)
-            }
-        })   
-    }
-
-    getApplications () {
-        return new Promise( async (resolve, reject) => {
-            try {
-                resolve (
-                    await this.getAllItems('PluginFlyvemdmPackage')
-                )
-            }
-            catch (err) {
-                reject(err)
-            }
-        })   
-    }
     
     getUsers () {
         return new Promise( async (resolve, reject) => {
