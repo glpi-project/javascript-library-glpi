@@ -34,34 +34,32 @@ class GlpiApiClient {
         config.appToken = appToken
     }
 
-    _makeRequest = async (myRequest, functionName, responseHandler) => {
+    _parser (element) {
         try {
-            const response = await fetch (myRequest)
-            switch (functionName) {
-                case 'killSession':
-                    if (response.ok) {
-                        responseHandler(await response.text(), response.ok)                            
-                    } else {
-                        responseHandler(await response.json(), response.ok) 
-                    }
-                break
+            return (JSON.parse(element))
+        } catch (err) {
+            return (element)
+        }
+    }
 
-                case 'changeActiveProfile':
-                    if (response.ok) {
-                        responseHandler(await response.text(), response.ok)                            
-                    } else {
-                        responseHandler(await response.json(), response.ok) 
-                    } 
-                break
-
-                case 'genericRequest':
-                    responseHandler(response, response.ok)                            
-                break
-                
-                default:
-                    responseHandler(await response.json(), response.ok)
-                break   
+    _makeRequest = async (myRequest, responseHandler) => {
+        try {
+            let xhr = new XMLHttpRequest()
+            xhr.open(myRequest.method, myRequest.url)
+            if (myRequest.headers) {
+                Object.keys(myRequest.headers).forEach(key => {
+                    xhr.setRequestHeader(key, myRequest.headers[key])
+                })
             }
+            xhr.onload = () => {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    responseHandler(this._parser(xhr.response), true)
+                } else {
+                    responseHandler(this._parser(xhr.statusText), false)
+                }
+            }
+            xhr.onerror = () => responseHandler(['Error', xhr.statusText], false)
+            xhr.send(myRequest.body)
         }
         catch (err) {
             responseHandler(['Error', err.toString()], false)
@@ -76,10 +74,10 @@ class GlpiApiClient {
                     userName,
                     userPassword
                 }
-                this._makeRequest( prepareRequest(data), 'initSessionByCredentials', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
                         if (response.session_token) config.sessionToken = response.session_token
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -98,10 +96,10 @@ class GlpiApiClient {
                     function: 'initSessionByUserToken',
                     userToken
                 }
-                this._makeRequest( prepareRequest(data), 'initSessionByUserToken', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
                         if (response.session_token) config.sessionToken = response.session_token
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -119,10 +117,10 @@ class GlpiApiClient {
                 const data = {
                     function: 'killSession'
                 }
-                this._makeRequest( prepareRequest(data), 'killSession', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
                         config.sessionToken = ''
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -145,9 +143,9 @@ class GlpiApiClient {
                         itemtype,
                         input
                     }
-                    this._makeRequest( prepareRequest(data), 'addItem', (response, isOk) => {
+                    this._makeRequest( prepareRequest(data), (response, isOk) => {
                         if (isOk) {
-                            resolve ( response ) 
+                            resolve (response) 
                         } else {
                             reject (response)
                         }
@@ -166,9 +164,9 @@ class GlpiApiClient {
                 const data = {
                     function: 'getFullSession'
                 }
-                this._makeRequest( prepareRequest(data), 'getFullSession', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -186,9 +184,9 @@ class GlpiApiClient {
                 const data = {
                     function: 'getActiveProfile'
                 }
-                this._makeRequest( prepareRequest(data), 'getActiveProfile', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -206,9 +204,9 @@ class GlpiApiClient {
                 const data = {
                     function: 'getMyProfiles'
                 }
-                this._makeRequest( prepareRequest(data), 'getMyProfiles', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -226,9 +224,9 @@ class GlpiApiClient {
                 const data = {
                     function: 'getMyEntities'
                 }
-                this._makeRequest( prepareRequest(data), 'getMyEntities', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -246,9 +244,9 @@ class GlpiApiClient {
                 const data = {
                     function: 'getActiveEntities'
                 }
-                this._makeRequest( prepareRequest(data), 'getActiveEntities', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -266,9 +264,9 @@ class GlpiApiClient {
                 const data = {
                     function: 'getGlpiConfig'
                 }
-                this._makeRequest( prepareRequest(data), 'getGlpiConfig', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -291,9 +289,9 @@ class GlpiApiClient {
                     queryString
                 }
 
-                this._makeRequest( prepareRequest(data), 'getAllItems', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -317,9 +315,9 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), 'getAnItem', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -345,9 +343,9 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), 'getSubItems', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -372,9 +370,9 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), 'deleteItem', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -398,9 +396,9 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), 'updateItem', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -421,9 +419,9 @@ class GlpiApiClient {
                     isRecursive
                 }
 
-                this._makeRequest( prepareRequest(data), 'changeActiveEntities', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -443,9 +441,9 @@ class GlpiApiClient {
                     profilesId
                 }
 
-                this._makeRequest( prepareRequest(data), 'changeActiveProfile', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -466,9 +464,9 @@ class GlpiApiClient {
                     options
                 }
 
-                this._makeRequest( prepareRequest(data), 'getMultipleItems', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -491,9 +489,9 @@ class GlpiApiClient {
                     options
                 }
 
-                this._makeRequest( prepareRequest(data), 'searchItems', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -514,9 +512,9 @@ class GlpiApiClient {
                     queryString
                 }
 
-                this._makeRequest( prepareRequest(data), 'listSearchOptions', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
-                        resolve ( response ) 
+                        resolve (response) 
                     } else {
                         reject (response)
                     }
@@ -681,7 +679,7 @@ class GlpiApiClient {
                     requestParams
                 }
 
-                this._makeRequest( prepareRequest(data), 'genericRequest', (response, isOk) => {
+                this._makeRequest( prepareRequest(data), (response, isOk) => {
                     if (isOk) {
                         resolve (response) 
                     } else {
