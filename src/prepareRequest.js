@@ -153,8 +153,9 @@ function prepareRequest (data) {
 
         case 'genericRequest':
             url = `${url}/${data.path}${ queryString ? queryString : '' }`
-
-            myInit = { ...data.requestParams } 
+            method = data.requestParams.method ? data.requestParams.method : method
+            body = data.requestParams.body ? data.requestParams.body : body
+            headers = data.requestParams.headers ? data.requestParams.headers : headers
         break
 
         default:
