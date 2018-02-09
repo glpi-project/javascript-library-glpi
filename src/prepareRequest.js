@@ -7,7 +7,8 @@ function prepareRequest (data) {
     let method = 'GET'
     let url = config.url
     let queryString = null
-    let body = {}    
+    let body = {}  
+    let responseType = 'text'  
 
     if (config.appToken) {
         headers = {
@@ -131,6 +132,7 @@ function prepareRequest (data) {
             method = data.requestParams.method ? data.requestParams.method : method
             body = data.requestParams.body ? data.requestParams.body : body
             headers = data.requestParams.headers ? data.requestParams.headers : headers
+            responseType = data.requestParams.responseType ? data.requestParams.responseType : responseType
         break
 
         default:
@@ -144,7 +146,7 @@ function prepareRequest (data) {
         }
     }
 
-    return {url, headers, method, body}
+    return {url, headers, method, body, responseType}
 }
 
 export default prepareRequest
