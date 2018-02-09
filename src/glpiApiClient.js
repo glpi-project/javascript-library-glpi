@@ -52,12 +52,12 @@ class GlpiApiClient {
                 })
             }
             xhr.onload = () => {
+                const response = this._parser(xhr.response)
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    const response = this._parser(xhr.response)
                     if (response.session_token) config.sessionToken = response.session_token
                     resolve(response)
                 } else {
-                    reject(this._parser(xhr.statusText))
+                    reject(response)
                 }
             }
             xhr.onerror = () => reject(['Error', xhr.statusText])
