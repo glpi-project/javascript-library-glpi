@@ -135,6 +135,13 @@ function prepareRequest (data) {
             responseType = data.requestParams.responseType ? data.requestParams.responseType : responseType
         break
 
+        case 'uploadFile':
+            url = `${url}/${data.itemtype}/${ queryString ? queryString : '' }`
+            body = data.input
+            method = 'POST'
+            delete headers['Content-Type']
+        break
+
         default:
         break
     }
