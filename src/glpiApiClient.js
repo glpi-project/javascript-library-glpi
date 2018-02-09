@@ -499,6 +499,7 @@ class GlpiApiClient {
     genericRequest ({path, queryString, requestParams}) {
         return new Promise((resolve, reject) => {
             try {
+                requestParams = requestParams ? requestParams : {}
                 const data = {
                     function: 'genericRequest',
                     path,
