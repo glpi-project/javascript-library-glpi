@@ -42,7 +42,7 @@ class GlpiApiClient {
         }
     }
 
-    _makeRequest = async (myRequest, responseHandler) => {
+    _makeRequest = async ({myRequest, resolve, reject}) => {
         try {
             let xhr = new XMLHttpRequest()
             xhr.open(myRequest.method, myRequest.url)
@@ -53,16 +53,18 @@ class GlpiApiClient {
             }
             xhr.onload = () => {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    responseHandler(this._parser(xhr.response), true)
+                    const response = this._parser(xhr.response)
+                    if (response.session_token) config.sessionToken = response.session_token
+                    resolve(response)
                 } else {
-                    responseHandler(this._parser(xhr.statusText), false)
+                    reject(this._parser(xhr.statusText))
                 }
             }
-            xhr.onerror = () => responseHandler(['Error', xhr.statusText], false)
+            xhr.onerror = () => reject(['Error', xhr.statusText])
             xhr.send(myRequest.body)
         }
         catch (err) {
-            responseHandler(['Error', err.toString()], false)
+            reject(['Error', err.toString()])
         }
     }
 
@@ -74,14 +76,7 @@ class GlpiApiClient {
                     userName,
                     userPassword
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        if (response.session_token) config.sessionToken = response.session_token
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -96,14 +91,7 @@ class GlpiApiClient {
                     function: 'initSessionByUserToken',
                     userToken
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        if (response.session_token) config.sessionToken = response.session_token
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -117,14 +105,7 @@ class GlpiApiClient {
                 const data = {
                     function: 'killSession'
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        config.sessionToken = ''
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -143,13 +124,7 @@ class GlpiApiClient {
                         itemtype,
                         input
                     }
-                    this._makeRequest( prepareRequest(data), (response, isOk) => {
-                        if (isOk) {
-                            resolve (response) 
-                        } else {
-                            reject (response)
-                        }
-                    })
+                    this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
                 }
             }
             catch (err) {
@@ -164,13 +139,7 @@ class GlpiApiClient {
                 const data = {
                     function: 'getFullSession'
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -184,13 +153,7 @@ class GlpiApiClient {
                 const data = {
                     function: 'getActiveProfile'
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -204,13 +167,7 @@ class GlpiApiClient {
                 const data = {
                     function: 'getMyProfiles'
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -224,13 +181,7 @@ class GlpiApiClient {
                 const data = {
                     function: 'getMyEntities'
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -244,13 +195,7 @@ class GlpiApiClient {
                 const data = {
                     function: 'getActiveEntities'
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -264,13 +209,7 @@ class GlpiApiClient {
                 const data = {
                     function: 'getGlpiConfig'
                 }
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -289,13 +228,7 @@ class GlpiApiClient {
                     queryString
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -315,13 +248,7 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -343,13 +270,7 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -370,13 +291,7 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -396,13 +311,7 @@ class GlpiApiClient {
                     id
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -419,13 +328,7 @@ class GlpiApiClient {
                     isRecursive
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -441,13 +344,7 @@ class GlpiApiClient {
                     profilesId
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -464,13 +361,7 @@ class GlpiApiClient {
                     options
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -489,13 +380,7 @@ class GlpiApiClient {
                     options
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -512,13 +397,7 @@ class GlpiApiClient {
                     queryString
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
@@ -627,13 +506,7 @@ class GlpiApiClient {
                     requestParams
                 }
 
-                this._makeRequest( prepareRequest(data), (response, isOk) => {
-                    if (isOk) {
-                        resolve (response) 
-                    } else {
-                        reject (response)
-                    }
-                })
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject})
             }
             catch (err) {
                 reject(err)
