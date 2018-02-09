@@ -137,10 +137,13 @@ function prepareRequest (data) {
         break
     }
 
-    if (config.sessionToken) {
-        url = `${url}${queryString ? '' : '?'}session_token=${config.sessionToken}`        
+    if (data.function !== 'initSessionByCredentials' && data.function !== 'initSessionByUserToken') {
+        headers = {
+            ...headers,
+            'Session-Token': config.sessionToken
+        }
     }
-    
+
     return {url, headers, method, body}
 }
 
