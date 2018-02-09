@@ -48,7 +48,7 @@ class GlpiApiClient {
     _makeRequest = async ({myRequest, resolve, reject }) => {
         try {
             let xhr = new XMLHttpRequest()
-            xhr.open(myRequest.method, myRequest.url)
+            xhr.open(myRequest.method, myRequest.url, true)
             xhr.responseType = myRequest.responseType
             if (myRequest.headers) {
                 Object.keys(myRequest.headers).forEach(key => {
@@ -509,6 +509,24 @@ class GlpiApiClient {
                     path,
                     queryString,
                     requestParams
+                }
+
+                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject })
+            }
+            catch (err) {
+                reject(err)
+            }
+        }) 
+    }
+
+    uploadFile ({itemtype, queryString, input}) {
+        return new Promise((resolve, reject) => {
+            try {
+                const data = {
+                    function: 'uploadFile',
+                    itemtype,
+                    queryString,
+                    input
                 }
 
                 this._makeRequest({ myRequest: prepareRequest(data), resolve, reject })
