@@ -60,7 +60,9 @@ class GlpiApiClient {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     if (response.session_token) config.sessionToken = response.session_token
                     resolve(response)
-                } else {
+                } else if (xhr.status === 504) {
+                    reject(['Error', 'Connection timeout'])
+                }else {
                     reject(response)
                 }
             }
