@@ -73,11 +73,32 @@ class GlpiApiClient {
                         data: [['Error', xhr.statusText]]
                     })                    
                 } else {
-                    reject({
-                        status: xhr.status,
-                        statusText: xhr.statusText,
-                        data: response
-                    })
+                    if (Array.isArray(response)) {
+                        let specialCase = false
+                        response.forEach(element => {
+                            if (Array.isArray(element)) 
+                                specialCase = true
+                        })
+                        if (specialCase || response.length > 2) {
+                            reject({
+                                status: xhr.status,
+                                statusText: xhr.statusText,
+                                data: response
+                            })
+                        } else {
+                            reject({
+                                status: xhr.status,
+                                statusText: xhr.statusText,
+                                data: [response]
+                            })                          
+                        }
+                    } else {
+                        reject({
+                            status: xhr.status,
+                            statusText: xhr.statusText,
+                            data: [['Error', response]]
+                        })
+                    }
                 }
             }
             xhr.onerror = () => {
