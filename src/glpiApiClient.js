@@ -61,12 +61,26 @@ class GlpiApiClient {
                     if (response.session_token) config.sessionToken = response.session_token
                     resolve(response)
                 } else if (xhr.status === 504) {
-                    reject(['Error', 'Connection timeout'])
-                }else {
-                    reject(response)
+                    reject({
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        data: [['Error', 'Connection timeout']]
+                    })
+                } else {
+                    reject({
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        data: response
+                    })
                 }
             }
-            xhr.onerror = () => reject(['Error', xhr.statusText])
+            xhr.onerror = () => {
+                reject({
+                    status: xhr.status,
+                    statusText: xhr.statusText,
+                    data: [['Error', xhr.statusText]]
+                })
+            }
             xhr.send(myRequest.body)
         }
         catch (err) {
