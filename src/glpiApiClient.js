@@ -80,20 +80,20 @@ class GlpiApiClient {
                                 specialCase = true
                         })
                         if (specialCase || response.length > 2) {
-                            reject({
+                            reject ({
                                 status: xhr.status,
                                 statusText: xhr.statusText,
                                 data: response
                             })
                         } else {
-                            reject({
+                            reject ({
                                 status: xhr.status,
                                 statusText: xhr.statusText,
                                 data: [response]
                             })                          
                         }
                     } else {
-                        reject({
+                        reject ({
                             status: xhr.status,
                             statusText: xhr.statusText,
                             data: [['Error', response]]
@@ -102,7 +102,7 @@ class GlpiApiClient {
                 }
             }
             xhr.onerror = () => {
-                reject({
+                reject ({
                     status: xhr.status,
                     statusText: xhr.statusText,
                     data: [['Error', xhr.statusText]]
@@ -111,7 +111,11 @@ class GlpiApiClient {
             xhr.send(myRequest.body)
         }
         catch (err) {
-            reject(['Error', err.toString()])
+            reject ({
+                status: xhr.status,
+                statusText: err.toString(),
+                data: [['Error', err.toString()]]
+            })
         }
     }
 
