@@ -66,6 +66,12 @@ class GlpiApiClient {
                         statusText: xhr.statusText,
                         data: [['Error', 'Connection timeout']]
                     })
+                } else if (xhr.status >= 500) {
+                    reject({
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        data: [['Error', xhr.statusText]]
+                    })                    
                 } else {
                     reject({
                         status: xhr.status,
