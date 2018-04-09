@@ -39,6 +39,26 @@ This library created in JavaScript features several functionalities common to al
 
 You will be able to call all the methods that belong to the [GLPI REST API](https://github.com/glpi-project/glpi/blob/master/apirest.md), for more information visit the [project's website](http://flyve.org/javascript-library-glpi/).
 
+## Code example
+
+```js
+import Glpi from '@glpi-project/javascript-library-glpi';
+
+    (async () => {
+        try {
+            const glpi = new Glpi({ url: 'your URL' });
+            await glpi.initSessionByUserToken({ userToken: 'your user token' });
+            const ActiveProfile = await client.getActiveProfile();
+            console.log(ActiveProfile);
+            await client.killSession();
+        }
+        catch (err) {
+            console.log(err);
+        }
+    })();
+
+```
+
 ## Build Status
 
 | **Release channel** | **Beta channel** |
