@@ -156,7 +156,12 @@ class GlpiApiClient {
                 const data = {
                     function: 'killSession'
                 }
-                this._makeRequest({ myRequest: prepareRequest(data), resolve, reject })
+                this._makeRequest({ myRequest: prepareRequest(
+                    data,
+                    () => {
+                        config.sessionToken = undefined
+                    }
+                ), resolve, reject })
             }
             catch (err) {
                 reject(err)
