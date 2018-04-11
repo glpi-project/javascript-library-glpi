@@ -1,7 +1,7 @@
 import config from './config'
 import createQueryString from './createQueryString'
 
-function prepareRequest (data) {
+function prepareRequest (data, callback) {
 
     let headers = {'Content-Type': 'application/json'}
     let method = 'GET'
@@ -152,6 +152,8 @@ function prepareRequest (data) {
             'Session-Token': config.sessionToken
         }
     }
+
+    if (callback) callback()
 
     return {url, headers, method, body, responseType}
 }
