@@ -34,15 +34,15 @@ class GlpiApiClient {
         config.appToken = appToken
     }
 
-    _parser (element, responseType) {
-        try {
-            if (responseType === "text") {
-                return (JSON.parse(element))
+    _parser (xhr, responseType) {
+        if (responseType === "text") {
+            try {
+                return (JSON.parse(xhr.response))
+            } catch (err) {
+                return (xhr.statusText)
             }
-            return (element)
-        } catch (err) {
-            return (element)
         }
+        return (xhr.response)
     }
 
     _makeRequest = async ({myRequest, resolve, reject }) => {
@@ -56,7 +56,7 @@ class GlpiApiClient {
                 })
             }
             xhr.onload = () => {
-                const response = this._parser(xhr.response, myRequest.responseType)
+                const response = this._parser(xhr, myRequest.responseType)
                 if (xhr.status >= 200 && xhr.status < 300) {
                     if (response.session_token) config.sessionToken = response.session_token
                     resolve(response)
