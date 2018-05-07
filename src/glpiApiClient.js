@@ -1,6 +1,7 @@
 import prepareRequest from './prepareRequest'
 import config from './config'
 import ITEMTYPE from './itemtype.json'
+import makeWithCancel from './makeWithCancel'
 
 class GlpiApiClient { 
     
@@ -120,7 +121,7 @@ class GlpiApiClient {
     }
 
     initSessionByCredentials ({userName, userPassword}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'initSessionByCredentials',
@@ -132,11 +133,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     initSessionByUserToken ({userToken}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'initSessionByUserToken',
@@ -147,11 +148,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     killSession () {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'killSession'
@@ -166,11 +167,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     addItem ({itemtype, input}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 if (!itemtype) {
                     reject('Invalid itemtype')
@@ -186,11 +187,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getFullSession () {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'getFullSession'
@@ -200,11 +201,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getActiveProfile () {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'getActiveProfile'
@@ -214,11 +215,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getMyProfiles () {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'getMyProfiles'
@@ -228,11 +229,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getMyEntities () {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'getMyEntities'
@@ -242,11 +243,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getActiveEntities () {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'getActiveEntities'
@@ -256,11 +257,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getGlpiConfig () {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'getGlpiConfig'
@@ -270,11 +271,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getAllItems ({itemtype, queryString}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
 
@@ -289,11 +290,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getAnItem ({itemtype, id, queryString}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
 
@@ -309,11 +310,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getSubItems ({itemtype, id, subItemtype, queryString}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
                 if (!subItemtype) reject ('Invalid subItemtype')
@@ -331,11 +332,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     deleteItem ({itemtype, id, input, queryString}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
 
@@ -352,11 +353,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     updateItem ({itemtype, id, input}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
 
@@ -372,11 +373,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     changeActiveEntities ({entitiesId, isRecursive}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'changeActiveEntities',
@@ -389,11 +390,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     changeActiveProfile ({profilesId}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'changeActiveProfile',
@@ -405,11 +406,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     getMultipleItems ({items, options}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'getMultipleItems',
@@ -422,11 +423,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     searchItems ({itemtype, criteria, metacriteria, options}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'searchItems',
@@ -441,11 +442,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        }) 
+        }))
     }
 
     listSearchOptions ({itemtype, queryString}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'listSearchOptions',
@@ -458,11 +459,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        }) 
+        }))
     }
 
     registerUser ({userToken, userData, itemtype}) {
-        return new Promise(async (resolve, reject) => {
+        return makeWithCancel(new Promise(async (resolve, reject) => {
             try {
                 await this.initSessionByUserToken({userToken})
                 const response = await this.addItem({itemtype, input: userData})
@@ -472,11 +473,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     login ({userName, userPassword}) {
-        return new Promise( async (resolve, reject) => {
+        return makeWithCancel(new Promise( async (resolve, reject) => {
             try {
                 const sessionToken = await this.initSessionByCredentials({userName, userPassword})
                 const fullSession = await this.getFullSession()
@@ -492,11 +493,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
     
     getUsers () {
-        return new Promise( async (resolve, reject) => {
+        return makeWithCancel(new Promise( async (resolve, reject) => {
             try {
                 resolve (
                     await this.getAllItems({itemtype: ITEMTYPE.User})
@@ -505,11 +506,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })      
+        }))
     }
 
     updateEmails ({userID, currentEmails, newEmails}) {
-        return new Promise( async (resolve, reject) => {
+        return makeWithCancel(new Promise( async (resolve, reject) => {
             try {
                 let emailsDelete = []
                 let emailsUpdate = []
@@ -549,11 +550,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        })
+        }))
     }
 
     genericRequest ({path, queryString, requestParams}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 requestParams = requestParams ? requestParams : {}
                 const data = {
@@ -568,11 +569,11 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        }) 
+        }))
     }
 
     uploadFile ({itemtype, queryString, input}) {
-        return new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise((resolve, reject) => {
             try {
                 const data = {
                     function: 'uploadFile',
@@ -586,7 +587,7 @@ class GlpiApiClient {
             catch (err) {
                 reject(err)
             }
-        }) 
+        }))
     }
 }
 
