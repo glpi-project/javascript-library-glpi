@@ -275,9 +275,16 @@ class GlpiApiClient {
     }
 
     getAllItems ({itemtype, queryString}) {
-        return makeWithCancel(new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise(async (resolve, reject) => {
             try {
                 if (!itemtype) reject ('Invalid itemtype')
+
+                if (!queryString) queryString = {}
+
+                if (!queryString.range) {
+                    const { totalcount } = await this.searchItems({ itemtype, options: { range: '0-0'} })
+                    queryString.range = `0-${totalcount}`
+                }
 
                 const data = {
                     function: 'getAllItems',
