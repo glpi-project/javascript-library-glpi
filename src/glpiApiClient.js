@@ -453,7 +453,7 @@ class GlpiApiClient {
     }
 
     searchAllItems ({itemtype, criteria, metacriteria, options}) {
-        return makeWithCancel(new Promise((resolve, reject) => {
+        return makeWithCancel(new Promise(async (resolve, reject) => {
             try {
                 if (!options) options = {}
                 const { totalcount } = await this.searchItems({ itemtype, criteria, metacriteria, options: { range: '0-0'} })
