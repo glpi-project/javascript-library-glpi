@@ -6,6 +6,7 @@
 [![Follow twitter](https://img.shields.io/twitter/follow/GLPI_PROJECT.svg?style=social&label=Twitter&style=flat-square)](https://twitter.com/GLPI_PROJECT)
 [![Project Status: WIP](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/)
 [![Telegram Group](https://img.shields.io/badge/Telegram-Group-blue.svg)](https://t.me/glpien)
+[![IRC Chat](https://img.shields.io/badge/IRC-%23GLPI-green.svg)](http://webchat.freenode.net/?channels=GLPI)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![Greenkeeper badge](https://badges.greenkeeper.io/flyve-mdm/javascript-library-glpi.svg)](https://greenkeeper.io/)
 
@@ -37,7 +38,7 @@ This library created in JavaScript features several functionalities common to al
 * Batching
 * Zero dependencies
 
-You will be able to call all the methods that belong to the [GLPI REST API](https://github.com/glpi-project/glpi/blob/master/apirest.md), for more information visit the [project's website](http://flyve.org/javascript-library-glpi/).
+You will be able to call all the methods that belong to the [GLPI REST API](https://github.com/glpi-project/glpi/blob/master/apirest.md), for more information visit the [project's website](https://glpi-project.github.io/javascript-library-glpi/).
 
 ## Code example
 
@@ -73,7 +74,7 @@ import Glpi from '@glpi-project/javascript-library-glpi';
 
 ## Documentation
 
-We maintain a detailed documentation of the project on the [website](http://flyve.org/javascript-library-glpi/).
+We maintain a detailed documentation of the project on the [website](https://glpi-project.github.io/javascript-library-glpi/).
 
 ## Versioning
 
